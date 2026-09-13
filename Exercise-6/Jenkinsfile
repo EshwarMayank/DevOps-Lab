@@ -1,0 +1,24 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'python3 -m pip install prometheus-client'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t delivery-metrics .'
+            }
+        }
+
+        stage('Verify Image') {
+            steps {
+                sh 'docker image inspect delivery-metrics'
+            }
+        }
+    }
+}
